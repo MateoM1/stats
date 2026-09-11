@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STATS — Support</title>
+<meta name="description" content="Support and contact for STATS, the universal personal tracker for iPhone.">
+<link rel="icon" href="icon.jpg">
+<style>
+  :root{
+    --bg-top:#F0F2F5; --bg-bottom:#E1E6EB;
+    --text:#1A2126; --dim:#3D4752;
+    --card:rgba(0,0,0,.05); --card-raised:rgba(0,0,0,.08);
+    --tint:#42618A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-top:#252D34; --bg-bottom:#0C0F13;
+      --text:#E8EDF0; --dim:#BDC4CC;
+      --card:rgba(255,255,255,.055); --card-raised:rgba(255,255,255,.10);
+      --tint:#8CADD4;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{height:100%}
+  body{
+    min-height:100vh;
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom)) fixed;
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    padding:32px 20px 48px;
+  }
+  main{max-width:640px;margin:0 auto}
+  html[data-l="en"] .es{display:none}
+  html[data-l="es"] .en{display:none}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+  header img{width:64px;height:64px;border-radius:16px;display:block}
+  header .name{font-size:28px;font-weight:800;letter-spacing:.04em}
+  header .tag{color:var(--dim);font-size:15px;margin-top:2px}
+  .langs{margin-left:auto;display:flex;background:var(--card);border-radius:22px;padding:3px}
+  .langs button{
+    border:0;background:transparent;color:var(--dim);font:inherit;font-size:13px;
+    font-weight:600;padding:5px 12px;border-radius:19px;cursor:pointer;
+  }
+  .langs button[aria-pressed="true"]{background:var(--card-raised);color:var(--text)}
+  .card{background:var(--card);border-radius:24px;padding:24px 26px;margin-bottom:16px}
+  h2{font-size:17px;font-weight:700;margin-bottom:10px}
+  p{color:var(--dim);font-size:15px}
+  p+p{margin-top:8px}
+  a{color:var(--tint);text-decoration:none;font-weight:600}
+  a:hover{text-decoration:underline}
+  .mail{
+    display:inline-block;margin-top:14px;background:var(--card-raised);
+    border-radius:22px;padding:10px 20px;font-size:15px;
+  }
+  ul{list-style:none}
+  li{color:var(--dim);font-size:15px;padding:10px 0}
+  li+li{border-top:1px solid var(--card)}
+  li b{color:var(--text);display:block;margin-bottom:2px;font-weight:600}
+  footer{margin-top:28px;text-align:center;color:var(--dim);font-size:13px}
+  footer a{font-weight:600}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.jpg" alt="STATS app icon">
+    <div>
+      <div class="name">STATS</div>
+      <div class="tag en">Track anything, in seconds.</div>
+      <div class="tag es">Registra todo en segundos.</div>
+    </div>
+    <nav class="langs" aria-label="Language">
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+      <button id="btn-es" onclick="setLang('es')">ES</button>
+    </nav>
+  </header>
+
+  <div class="card">
+    <div class="en">
+      <h2>Support</h2>
+      <p>Questions, problems, or ideas — write and I'll get back to you.</p>
+      <a class="mail" href="mailto:vetandbreakfast@gmail.com">vetandbreakfast@gmail.com</a>
+    </div>
+    <div class="es">
+      <h2>Soporte</h2>
+      <p>Preguntas, problemas o ideas — escríbeme y te respondo.</p>
+      <a class="mail" href="mailto:vetandbreakfast@gmail.com">vetandbreakfast@gmail.com</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="en">
+      <h2>Common questions</h2>
+      <ul>
+        <li><b>Where is my data?</b> On your iPhone. It only leaves your device if you create an account and turn on sync. Details in the <a href="privacy/">privacy policy</a>.</li>
+        <li><b>Can I export everything?</b> Yes — Settings exports your full history to Excel or CSV anytime.</li>
+        <li><b>How do I delete my account?</b> Settings → Account → Delete account. It removes the account and everything stored on the server.</li>
+      </ul>
+    </div>
+    <div class="es">
+      <h2>Preguntas frecuentes</h2>
+      <ul>
+        <li><b>¿Dónde están mis datos?</b> En tu iPhone. Solo salen de tu dispositivo si creas una cuenta y activas la sincronización. Detalles en la <a href="privacy/">política de privacidad</a>.</li>
+        <li><b>¿Puedo exportar todo?</b> Sí — desde Ajustes exportas tu historial completo a Excel o CSV cuando quieras.</li>
+        <li><b>¿Cómo elimino mi cuenta?</b> Ajustes → Cuenta → Eliminar cuenta. Borra la cuenta y todo lo guardado en el servidor.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span class="en"><a href="privacy/">Privacy Policy</a> · © 2026 STATS</span>
+    <span class="es"><a href="privacy/">Política de privacidad</a> · © 2026 STATS</span>
+  </footer>
+</main>
+<script>
+  function setLang(l){
+    document.documentElement.setAttribute('data-l', l);
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    document.getElementById('btn-en').setAttribute('aria-pressed', l === 'en');
+    document.getElementById('btn-es').setAttribute('aria-pressed', l === 'es');
+  }
+  setLang(localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'en'));
+</script>
+</body>
+</html>
