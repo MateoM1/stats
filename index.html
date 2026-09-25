@@ -6,6 +6,11 @@
 <title>STATS — Support</title>
 <meta name="description" content="Support and contact for STATS, the universal personal tracker for iPhone.">
 <link rel="icon" href="icon.jpg">
+<script>
+  // Supabase sends password-reset links to the Site URL (this page) with the session in the
+  // fragment; hand them to the reset page.
+  if (/(^|[#&])(type=recovery|error_code=)/.test(location.hash)) location.replace('reset/' + location.hash);
+</script>
 <style>
   :root{
     --bg-top:#F0F2F5; --bg-bottom:#E1E6EB;

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" data-l="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>STATS — Reset password</title>
+<link rel="icon" href="../icon.jpg">
+<style>
+  :root{
+    --bg-top:#F0F2F5; --bg-bottom:#E1E6EB;
+    --text:#1A2126; --dim:#3D4752;
+    --card:rgba(0,0,0,.05); --card-raised:rgba(0,0,0,.08);
+    --tint:#42618A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-top:#252D34; --bg-bottom:#0C0F13;
+      --text:#E8EDF0; --dim:#BDC4CC;
+      --card:rgba(255,255,255,.055); --card-raised:rgba(255,255,255,.10);
+      --tint:#8CADD4;
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{height:100%}
+  body{
+    min-height:100vh;
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom)) fixed;
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    padding:32px 20px 48px;
+  }
+  main{max-width:640px;margin:0 auto}
+  html[data-l="en"] .es{display:none}
+  html[data-l="es"] .en{display:none}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+  header img{width:44px;height:44px;border-radius:11px;display:block}
+  header .name{font-size:20px;font-weight:800;letter-spacing:.04em}
+  header .name a{color:inherit;text-decoration:none}
+  .langs{margin-left:auto;display:flex;background:var(--card);border-radius:22px;padding:3px}
+  .langs button{
+    border:0;background:transparent;color:var(--dim);font:inherit;font-size:13px;
+    font-weight:600;padding:5px 12px;border-radius:19px;cursor:pointer;
+  }
+  .langs button[aria-pressed="true"]{background:var(--card-raised);color:var(--text)}
+  article{background:var(--card);border-radius:24px;padding:26px 26px 30px}
+  h1{font-size:22px;margin-bottom:2px}
+  .date{color:var(--dim);font-size:13px;margin-bottom:18px}
+  h2{font-size:16px;font-weight:700;margin:22px 0 6px}
+  p,li{color:var(--dim);font-size:15px}
+  p+p{margin-top:8px}
+  ul{padding-left:20px;margin-top:6px}
+  li{margin-top:4px}
+  a{color:var(--tint);text-decoration:none;font-weight:600}
+  a:hover{text-decoration:underline}
+  .lead{color:var(--text)}
+  footer{margin-top:24px;text-align:center;color:var(--dim);font-size:13px}
+</style>
+<style>
+  form{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+  label{font-size:14px;font-weight:600;color:var(--text)}
+  input{
+    width:100%;margin-top:6px;padding:12px 14px;border-radius:14px;border:1px solid var(--card-raised);
+    background:var(--card);color:var(--text);font:inherit;font-size:16px;
+  }
+  input:focus{outline:2px solid var(--tint);outline-offset:1px}
+  button.primary{
+    margin-top:6px;padding:12px 16px;border:0;border-radius:14px;background:var(--tint);color:#fff;
+    font:inherit;font-size:16px;font-weight:700;cursor:pointer;
+  }
+  button.primary:disabled{opacity:.5;cursor:default}
+  .msg{margin-top:14px;font-size:15px}
+  .msg.error{color:#C0392B}
+  @media (prefers-color-scheme: dark){ .msg.error{color:#FF7B6E} }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="../icon.jpg" alt="STATS app icon">
+    <div class="name"><a href="../">STATS</a></div>
+    <nav class="langs" aria-label="Language">
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+      <button id="btn-es" onclick="setLang('es')">ES</button>
+    </nav>
+  </header>
+
+  <article>
+    <h1><span class="en">Set a new password</span><span class="es">Crea una contraseña nueva</span></h1>
+
+    <!-- Shown while the recovery link is valid. -->
+    <div id="form-view" hidden>
+      <p><span class="en">Choose a new password for your STATS account.</span><span class="es">Elige una contraseña nueva para tu cuenta de STATS.</span></p>
+      <form id="form" novalidate>
+        <label><span class="en">New password</span><span class="es">Contraseña nueva</span>
+          <input id="pw" type="password" autocomplete="new-password" minlength="8" required>
+        </label>
+        <label><span class="en">Confirm password</span><span class="es">Confirma la contraseña</span>
+          <input id="pw2" type="password" autocomplete="new-password" minlength="8" required>
+        </label>
+        <button class="primary" id="submit" type="submit"><span class="en">Save password</span><span class="es">Guardar contraseña</span></button>
+      </form>
+    </div>
+
+    <p id="msg" class="msg" hidden></p>
+  </article>
+
+  <footer>
+    <span class="en"><a href="../">Support</a> · <a href="../privacy/">Privacy</a> · © 2026 STATS</span>
+    <span class="es"><a href="../">Soporte</a> · <a href="../privacy/">Privacidad</a> · © 2026 STATS</span>
+  </footer>
+</main>
+<script>
+  function setLang(l){
+    document.documentElement.setAttribute('data-l', l);
+    document.documentElement.lang = l;
+    localStorage.setItem('lang', l);
+    document.getElementById('btn-en').setAttribute('aria-pressed', l === 'en');
+    document.getElementById('btn-es').setAttribute('aria-pressed', l === 'es');
+  }
+  setLang(localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'en'));
+
+  // Same project and public (publishable) key the app ships with.
+  const SUPABASE_URL = 'https://uhiqfokhxsbjngmaktdg.supabase.co';
+  const PUBLISHABLE_KEY = 'sb_publishable_DRDM1M3D3HoVgOc96c1auA_istHmy7l';
+  const MIN_LENGTH = 8; // AuthService.minPasswordLength
+
+  const TEXT = {
+    invalid: {
+      en: 'This reset link is invalid or has expired. In STATS, tap “Forgot password?” again to get a new one.',
+      es: 'Este enlace no es válido o ya expiró. En STATS, toca “¿Olvidaste tu contraseña?” de nuevo para recibir uno nuevo.'
+    },
+    short: { en: 'Use at least 8 characters.', es: 'Usa al menos 8 caracteres.' },
+    mismatch: { en: 'The passwords don’t match.', es: 'Las contraseñas no coinciden.' },
+    failed: {
+      en: 'Couldn’t save the password. Check your connection and try again.',
+      es: 'No se pudo guardar la contraseña. Revisa tu conexión e inténtalo de nuevo.'
+    },
+    same: {
+      en: 'Choose a password different from your current one.',
+      es: 'Elige una contraseña distinta de la actual.'
+    },
+    weak: { en: 'That password is too weak. Try a longer one.', es: 'Esa contraseña es muy débil. Prueba una más larga.' },
+    done: {
+      en: 'Your password was updated. Open STATS and log in with it.',
+      es: 'Tu contraseña se actualizó. Abre STATS e inicia sesión con ella.'
+    }
+  };
+  const lang = () => document.documentElement.getAttribute('data-l');
+  const msg = document.getElementById('msg');
+  let current = null;
+  function show(key, isError){
+    current = { key, isError };
+    msg.textContent = TEXT[key][lang()];
+    msg.className = 'msg' + (isError ? ' error' : '');
+    msg.hidden = false;
+  }
+  // Re-render the message when the language toggle flips.
+  for (const id of ['btn-en', 'btn-es']) {
+    document.getElementById(id).addEventListener('click', () => { if (current) show(current.key, current.isError); });
+  }
+
+  // Supabase's recovery redirect carries the session in the URL fragment. Read it once, then
+  // strip it so the token doesn't linger in the address bar or history.
+  const params = new URLSearchParams(location.hash.slice(1));
+  const accessToken = params.get('access_token');
+  const isRecovery = params.get('type') === 'recovery';
+  history.replaceState(null, '', location.pathname);
+
+  if (!accessToken || !isRecovery || params.get('error')) {
+    show('invalid', true);
+  } else {
+    document.getElementById('form-view').hidden = false;
+  }
+
+  document.getElementById('form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const pw = document.getElementById('pw').value;
+    const pw2 = document.getElementById('pw2').value;
+    if (pw.length < MIN_LENGTH) return show('short', true);
+    if (pw !== pw2) return show('mismatch', true);
+    const button = document.getElementById('submit');
+    button.disabled = true;
+    msg.hidden = true;
+    try {
+      const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        method: 'PUT',
+        headers: {
+          'apikey': PUBLISHABLE_KEY,
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: pw })
+      });
+      if (response.ok) {
+        document.getElementById('form-view').hidden = true;
+        return show('done', false);
+      }
+      const body = await response.json().catch(() => ({}));
+      const code = body.error_code || body.code || '';
+      if (response.status === 401 || response.status === 403 || code === 'bad_jwt' || code === 'session_not_found') {
+        document.getElementById('form-view').hidden = true;
+        show('invalid', true);
+      } else if (code === 'same_password') {
+        show('same', true);
+      } else if (code === 'weak_password') {
+        show('weak', true);
+      } else {
+        show('failed', true);
+      }
+    } catch {
+      show('failed', true);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
